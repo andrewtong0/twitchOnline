@@ -53,10 +53,10 @@ if sc.rtm_connect(): # Ensure Slack has successfully connected
                 # Only drop a message in the updates once after a stream goes online
                 sc.api_call('chat.postMessage', channel=channel, text=str(x) + " is now streaming [www.twitch.tv/" + str(x) + "]",
                             username='Stream Notification Bot', icon_emoji=':robot_face:')
-                print(str(x) + " has just went live")
+                print(str(x) + " just went live")
             if usersDict[x] == "online":
                 online.append(x)
-            elif re.search(x, response.text, 0) == None and usersDict[x] == "online":
+            if re.search(x, response.text, 0) == None and usersDict[x] == "online":
                 usersDict[x] = "offline"
                 print(str(x) + " has gone offline")
         events = sc.rtm_read() # Read through all events
