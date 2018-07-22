@@ -2,6 +2,7 @@
 Check if streamers from a list of specified streamers go live on Twitch
 
 ## Dependencies
+* Python 3
 * Requests (for making calls to the New Twitch API)
 * Regular Expressions (for parsing and cleaning received data)
 * SlackClient (Slack API for notifications + commands)
