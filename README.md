@@ -42,6 +42,7 @@ In order to make the code work, you must modify the following in the code:
 No guarantees I'll ever get to these since I usually abandon projects once they're done (or sometimes when they aren't done).
 * Remove case sensitivity in commands and user input
 * Adding full command functionality to Discord version
+* Issues with Twitch requests giving false offline positives, will implement a confirmation system to reduce false positives
 
 ## Special Thanks
 Thanks to the following articles as they helped in various functionality with this script:
