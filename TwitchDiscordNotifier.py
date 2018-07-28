@@ -6,7 +6,7 @@ import re # Regular expressions for parsing through data
 client = discord.Client()
 # List of streams to check online status of
 # Recommended to put all names in full lowercase since Twitch seems to handle capitalization incorrectly
-users = ['LIST OF STREAMERS TO CHECK HERE]
+users = ['LIST OF STREAMERS TO CHECK HERE']
 
 # Client ID (for authentication with Twitch API)
 headers = {'Client-ID': 'TWITCH CLIENT ID', }
