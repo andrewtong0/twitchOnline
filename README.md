@@ -1,4 +1,4 @@
-# twitchOnline
+# twitchOnlineSlack
 Check if streamers from a list of specified streamers go live on Twitch
 
 ## Dependencies
