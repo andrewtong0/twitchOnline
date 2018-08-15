@@ -28,7 +28,7 @@ for x in users:
 headers = {'Client-ID': 'TWITCH CLIENT ID GOES HERE',}
 
 # Slack integration
-token = 'xoxp-371964243174-370528179361-393787813828-bcff83cc40e5a654a576f15e616115ca'
+token = 'SLACK TOKEN GOES HERE'
 sc = SlackClient(token)
 channel = "stream-updates" # Slack channel name to send message
 
