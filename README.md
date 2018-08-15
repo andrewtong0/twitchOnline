@@ -52,3 +52,5 @@ Thanks to the following articles as they helped in various functionality with th
   * Used as a reference for creating commmands in Slack
 * Discord background task example
   * Reference for running background tasks rather than awaiting user commands
+* How To Index and Slice Strings in Python 3, Lisa Tagliaferri, September 28, 2016
+  * Used to parse Twitch response data for streamer names to locate stream titles
