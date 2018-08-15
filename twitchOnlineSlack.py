@@ -35,8 +35,6 @@ channel = "stream-updates" # Slack channel name to send message
 # Variable Declaration
 online = [] # Array used for .online command for currently online streams
 titleDict = {} # Array used to store the titles of each stream
-
-counter = 2;
 titleSuffix = 0;
 
 # Infinite loop to continuously check stream status until termination
