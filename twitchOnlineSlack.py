@@ -17,7 +17,7 @@ delay = 3 # In seconds
 
 # List of streams to check online status of
 # Recommended to put all names in full lowercase since Twitch seems to handle capitalization incorrectly
-users = ['INSERT STREAMS TO CHECK FOR HERE']
+users = ['STREAMER LIST GOES HERE']
 usersDict = {} # Dictionary storing streamer + status (offline on runtime)
 
 # Set status of all streamers to offline
@@ -25,15 +25,19 @@ for x in users:
     usersDict.update({x: "offline"})
 
 # Client ID (for authentication with Twitch API)
-headers = {'Client-ID': 'INSERT TWITCH CLIENT ID HERE',}
+headers = {'Client-ID': 'TWITCH CLIENT ID GOES HERE',}
 
 # Slack integration
-token = 'INSERT SLACK TOKEN HERE'
+token = 'xoxp-371964243174-370528179361-393787813828-bcff83cc40e5a654a576f15e616115ca'
 sc = SlackClient(token)
-channel = "INSERT SLACK CHANNEL TO SEND MESSAGES TO" # Slack channel name to send message
+channel = "stream-updates" # Slack channel name to send message
 
-# Declaration of arrays
+# Variable Declaration
 online = [] # Array used for .online command for currently online streams
+titleDict = {} # Array used to store the titles of each stream
+
+counter = 2;
+titleSuffix = 0;
 
 # Infinite loop to continuously check stream status until termination
 if sc.rtm_connect(): # Ensure Slack has successfully connected
@@ -45,19 +49,33 @@ if sc.rtm_connect(): # Ensure Slack has successfully connected
             params.append(('user_login', x))
         # Sending headers + parameters to the Twitch API to return information
         response = requests.get('https://api.twitch.tv/helix/streams', headers=headers, params=params)
+        numOnline = (response.text.count('title":"'))
+        while(numOnline > 0):
+            titlePrefix = (response.text.find('title":"', titleSuffix)) + 8
+            titleSuffix = (response.text.find('","viewer', titlePrefix))
+
+            namePrefix = (response.text.find('live_user_', titleSuffix)) + 10
+            nameSuffix = (response.text.find('-{width', namePrefix))
+            numOnline -= 1
+            streamTitle = (response.text[titlePrefix:titleSuffix])
+            streamerName = (response.text[namePrefix:nameSuffix])
+            titleDict[streamerName] = streamTitle
 
         # SLACK NOTIFICATIONS
         for x in users: # Update associated dictionary entries with online status when online
             if re.search(x, response.text, 0) != None and usersDict[x] == "offline":
                 usersDict[x] = "online"
                 # Only drop a message in the updates once after a stream goes online
-                sc.api_call('chat.postMessage', channel=channel, text=str(x) + " is now streaming [www.twitch.tv/" + str(x) + "]",
+                sc.api_call('chat.postMessage', channel=channel, text=str(x) + " is now streaming: " + titleDict[x] + " [www.twitch.tv/" + str(x) + "]",
                             username='Stream Notification Bot', icon_emoji=':robot_face:')
-                print(str(x) + " just went live")
+                print(x + " is now streaming: " + titleDict[x])
+
+
             if usersDict[x] == "online":
                 online.append(x)
             if re.search(x, response.text, 0) == None and usersDict[x] == "online":
                 usersDict[x] = "offline"
+                titleDict[x] = ""
                 print(str(x) + " has gone offline")
         events = sc.rtm_read() # Read through all events
         for event in events: # Iterate through all events that happen on the Slack channel
