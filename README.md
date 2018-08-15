@@ -31,6 +31,7 @@ In order to make the code work, you must modify the following in the code:
   * .status STREAMNAME - replace STREAMNAME with a stream name (case sensitive to given stream list) to check the current status of the stream (online/offline). Also provides a link to the stream.
 * Discord Version
   * !online - gives a list of all online streams (from given list of streams to check for).
+  * !uptime STREAMNAME - gives the start time of an online streamer (must also be in databse)
 
 ## Important Notes
 * The New Twitch API handles capitalization of names in cURL requests weird. I've found that keeping stream usernames in the list of names to check for in all lowercase works.
