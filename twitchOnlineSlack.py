@@ -19,6 +19,7 @@ delay = 3 # In seconds
 # Recommended to put all names in full lowercase since Twitch seems to handle capitalization incorrectly
 users = ['STREAMER LIST GOES HERE']
 usersDict = {} # Dictionary storing streamer + status (offline on runtime)
+uptimeDict = {} # Dictionary storing streamer + uptime
 
 # Set status of all streamers to offline
 for x in users:
@@ -54,10 +55,15 @@ if sc.rtm_connect(): # Ensure Slack has successfully connected
 
             namePrefix = (response.text.find('live_user_', titleSuffix)) + 10
             nameSuffix = (response.text.find('-{width', namePrefix))
-            numOnline -= 1
+
+            uptimePrefix = (response.text.find('"started_at":"', titleSuffix)) + 14
+            uptimeSuffix = (response.text.find('","language', uptimePrefix))
+
             streamTitle = (response.text[titlePrefix:titleSuffix])
             streamerName = (response.text[namePrefix:nameSuffix])
             titleDict[streamerName] = streamTitle
+            uptimeDict[streamerName] = (response.text[uptimePrefix:uptimeSuffix])
+            numOnline -= 1
 
         # SLACK NOTIFICATIONS
         for x in users: # Update associated dictionary entries with online status when online
@@ -66,7 +72,7 @@ if sc.rtm_connect(): # Ensure Slack has successfully connected
                 # Only drop a message in the updates once after a stream goes online
                 sc.api_call('chat.postMessage', channel=channel, text=str(x) + " is now streaming: " + titleDict[x] + " [www.twitch.tv/" + str(x) + "]",
                             username='Stream Notification Bot', icon_emoji=':robot_face:')
-                print(x + " is now streaming: " + titleDict[x])
+                print(x + " is now streaming: " + titleDict[x] + ", online since " + uptimeDict[x])
 
 
             if usersDict[x] == "online":
