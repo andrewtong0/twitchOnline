@@ -9,7 +9,7 @@ Check if streamers from a list of specified streamers go live on Twitch
 * SlackClient (Slack API for notifications + commands) **OR** Discord.py (Discord module for notifications + commands)
   * Dependent on which program you decide to use
 
-## What Does it Do
+## What It Does
 twitchOnline monitors a list of Twitch streamers that you input and sends a message in a designated Slack or Discord channel when one of them goes live. Also provides command functionality for more flexibility. If you're curious regarding the process in which I developed this script, you can check out my blog post [here](https://thecompanyproject.wordpress.com/2018/07/17/tol-online-broadcast-bot/).
 
 ## Necessary Input
